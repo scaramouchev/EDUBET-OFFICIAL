@@ -1,24 +1,52 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "EduBet — Predict what happens next on campus" },
+      {
+        name: "description",
+        content:
+          "A campus prediction network. Follow what your university is talking about, make predictions in seconds, and climb your campus leaderboard.",
+      },
+      { property: "og:title", content: "EduBet — Predict what happens next on campus" },
+      {
+        property: "og:description",
+        content: "Your campus. Your predictions. Your rank.",
+      },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="void-field grain relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+      <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-hairline bg-white/4 backdrop-blur-xl">
+        <svg viewBox="0 0 40 40" className="h-9 w-9 opacity-80">
+          <circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" strokeWidth="1" />
+          <path d="M7 20h26" stroke="currentColor" strokeWidth="1" />
+          <path d="M13 16l-4 4 4 4M27 16l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1" />
+        </svg>
+      </div>
+
+      <p className="label mt-12">EduBet</p>
+
+      <h1 className="mt-4 max-w-2xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+        Predict what happens next.
+      </h1>
+
+      <div className="mt-6 space-y-1 text-muted-foreground">
+        <p>Your campus.</p>
+        <p>Your predictions.</p>
+        <p>Your rank.</p>
+      </div>
+
+      <Link to="/campus" className="ghost-btn mt-12 px-8 py-4 text-foreground">
+        Enter →
+      </Link>
+
+      <p className="label absolute bottom-10">Campus Prediction Network · 2026</p>
+    </main>
   );
 }

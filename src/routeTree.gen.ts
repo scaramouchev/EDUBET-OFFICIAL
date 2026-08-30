@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CampusRouteImport } from './routes/campus'
+import { Route as CreateRouteImport } from './routes/create'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PulseRouteImport } from './routes/pulse'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const CampusRoute = CampusRouteImport.update({
   id: '/campus',
   path: '/campus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeRoute = HomeRouteImport.update({
@@ -50,6 +56,7 @@ const RankRoute = RankRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
   '/home': typeof HomeRoute
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
   '/home': typeof HomeRoute
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
   '/home': typeof HomeRoute
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
@@ -74,15 +83,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/campus' | '/home' | '/profile' | '/pulse' | '/rank'
+  fullPaths:
+    '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campus' | '/home' | '/profile' | '/pulse' | '/rank'
-  id: '__root__' | '/' | '/campus' | '/home' | '/profile' | '/pulse' | '/rank'
+  to: '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
+  id:
+    | '__root__'
+    | '/'
+    | '/campus'
+    | '/create'
+    | '/home'
+    | '/profile'
+    | '/pulse'
+    | '/rank'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CampusRoute: typeof CampusRoute
+  CreateRoute: typeof CreateRoute
   HomeRoute: typeof HomeRoute
   ProfileRoute: typeof ProfileRoute
   PulseRoute: typeof PulseRoute
@@ -103,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/campus'
       fullPath: '/campus'
       preLoaderRoute: typeof CampusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home': {
@@ -139,6 +165,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CampusRoute: CampusRoute,
+  CreateRoute: CreateRoute,
   HomeRoute: HomeRoute,
   ProfileRoute: ProfileRoute,
   PulseRoute: PulseRoute,

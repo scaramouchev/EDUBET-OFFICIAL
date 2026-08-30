@@ -14,16 +14,96 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      college_requests: {
+        Row: {
+          college_name: string
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          college_name: string
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          college_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      predictions: {
+        Row: {
+          amount: number
+          campus: Database["public"]["Enums"]["campus_id"] | null
+          id: string
+          locked_at: string
+          market_id: string
+          market_question: string
+          side: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          id?: string
+          locked_at?: string
+          market_id: string
+          market_question: string
+          side: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          id?: string
+          locked_at?: string
+          market_id?: string
+          market_question?: string
+          side?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"] | null
+          campus_verified: boolean
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          campus_verified?: boolean
+          created_at?: string
+          email: string
+          id: string
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          campus_verified?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      campus_from_email: {
+        Args: { _email: string }
+        Returns: Database["public"]["Enums"]["campus_id"]
+      }
     }
     Enums: {
-      [_ in never]: never
+      campus_id: "fsu" | "uf" | "famu"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +230,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      campus_id: ["fsu", "uf", "famu"],
+    },
   },
 } as const

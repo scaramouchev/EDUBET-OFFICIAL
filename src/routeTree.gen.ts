@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CampusRouteImport } from './routes/campus'
+import { Route as CreateRouteImport } from './routes/create'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PulseRouteImport } from './routes/pulse'
+import { Route as RankRouteImport } from './routes/rank'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampusRoute = CampusRouteImport.update({
+  id: '/campus',
+  path: '/campus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PulseRoute = PulseRouteImport.update({
+  id: '/pulse',
+  path: '/pulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankRoute = RankRouteImport.update({
+  id: '/rank',
+  path: '/rank',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/campus': typeof CampusRoute
+  '/create': typeof CreateRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
+  id:
+    | '__root__'
+    | '/'
+    | '/campus'
+    | '/create'
+    | '/home'
+    | '/profile'
+    | '/pulse'
+    | '/rank'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CampusRoute: typeof CampusRoute
+  CreateRoute: typeof CreateRoute
+  HomeRoute: typeof HomeRoute
+  ProfileRoute: typeof ProfileRoute
+  PulseRoute: typeof PulseRoute
+  RankRoute: typeof RankRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campus': {
+      id: '/campus'
+      path: '/campus'
+      fullPath: '/campus'
+      preLoaderRoute: typeof CampusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pulse': {
+      id: '/pulse'
+      path: '/pulse'
+      fullPath: '/pulse'
+      preLoaderRoute: typeof PulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rank': {
+      id: '/rank'
+      path: '/rank'
+      fullPath: '/rank'
+      preLoaderRoute: typeof RankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CampusRoute: CampusRoute,
+  CreateRoute: CreateRoute,
+  HomeRoute: HomeRoute,
+  ProfileRoute: ProfileRoute,
+  PulseRoute: PulseRoute,
+  RankRoute: RankRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

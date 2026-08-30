@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as PulseRouteImport } from './routes/pulse'
+import { Route as RankRouteImport } from './routes/rank'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const PulseRoute = PulseRouteImport.update({
   path: '/pulse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RankRoute = RankRouteImport.update({
+  id: '/rank',
+  path: '/rank',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
   '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
   '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
   '/pulse': typeof PulseRoute
+  '/rank': typeof RankRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/campus' | '/home' | '/pulse'
+  fullPaths: '/' | '/campus' | '/home' | '/pulse' | '/rank'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campus' | '/home' | '/pulse'
-  id: '__root__' | '/' | '/campus' | '/home' | '/pulse'
+  to: '/' | '/campus' | '/home' | '/pulse' | '/rank'
+  id: '__root__' | '/' | '/campus' | '/home' | '/pulse' | '/rank'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   CampusRoute: typeof CampusRoute
   HomeRoute: typeof HomeRoute
   PulseRoute: typeof PulseRoute
+  RankRoute: typeof RankRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PulseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rank': {
+      id: '/rank'
+      path: '/rank'
+      fullPath: '/rank'
+      preLoaderRoute: typeof RankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampusRoute: CampusRoute,
   HomeRoute: HomeRoute,
   PulseRoute: PulseRoute,
+  RankRoute: RankRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

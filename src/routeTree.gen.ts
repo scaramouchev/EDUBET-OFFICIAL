@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as PulseRouteImport } from './routes/pulse'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const HomeRoute = HomeRouteImport.update({
   path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PulseRoute = PulseRouteImport.update({
+  id: '/pulse',
+  path: '/pulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
+  '/pulse': typeof PulseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
+  '/pulse': typeof PulseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/campus': typeof CampusRoute
   '/home': typeof HomeRoute
+  '/pulse': typeof PulseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/campus' | '/home'
+  fullPaths: '/' | '/campus' | '/home' | '/pulse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campus' | '/home'
-  id: '__root__' | '/' | '/campus' | '/home'
+  to: '/' | '/campus' | '/home' | '/pulse'
+  id: '__root__' | '/' | '/campus' | '/home' | '/pulse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CampusRoute: typeof CampusRoute
   HomeRoute: typeof HomeRoute
+  PulseRoute: typeof PulseRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pulse': {
+      id: '/pulse'
+      path: '/pulse'
+      fullPath: '/pulse'
+      preLoaderRoute: typeof PulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CampusRoute: CampusRoute,
   HomeRoute: HomeRoute,
+  PulseRoute: PulseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

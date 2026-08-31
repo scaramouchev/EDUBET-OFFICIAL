@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_requests: {
+        Row: {
+          admin_note: string | null
+          college_name: string
+          created_at: string
+          email: string
+          id: string
+          reason: string
+          status: Database["public"]["Enums"]["request_status"]
+          ticket_code: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_note?: string | null
+          college_name: string
+          created_at?: string
+          email: string
+          id?: string
+          reason: string
+          status?: Database["public"]["Enums"]["request_status"]
+          ticket_code?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_note?: string | null
+          college_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          reason?: string
+          status?: Database["public"]["Enums"]["request_status"]
+          ticket_code?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      auth_audit_log: {
+        Row: {
+          created_at: string
+          email: string | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          metadata: Json
+          severity: string
+          success: boolean
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          severity?: string
+          success?: boolean
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          severity?: string
+          success?: boolean
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       college_requests: {
         Row: {
           college_name: string
@@ -35,6 +113,39 @@ export type Database = {
         }
         Relationships: []
       }
+      colleges: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"] | null
+          created_at: string
+          domain: string
+          id: string
+          is_active: boolean
+          name: string
+          short_name: string
+          updated_at: string
+        }
+        Insert: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          created_at?: string
+          domain: string
+          id?: string
+          is_active?: boolean
+          name: string
+          short_name: string
+          updated_at?: string
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          created_at?: string
+          domain?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          short_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       predictions: {
         Row: {
           amount: number
@@ -43,6 +154,9 @@ export type Database = {
           locked_at: string
           market_id: string
           market_question: string
+          outcome: string | null
+          reference_id: string
+          resolved_at: string | null
           side: string
           user_id: string
         }
@@ -53,6 +167,9 @@ export type Database = {
           locked_at?: string
           market_id: string
           market_question: string
+          outcome?: string | null
+          reference_id?: string
+          resolved_at?: string | null
           side: string
           user_id: string
         }
@@ -63,6 +180,9 @@ export type Database = {
           locked_at?: string
           market_id?: string
           market_question?: string
+          outcome?: string | null
+          reference_id?: string
+          resolved_at?: string | null
           side?: string
           user_id?: string
         }
@@ -70,25 +190,151 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_status: string
+          avatar_url: string | null
+          bio: string | null
           campus: Database["public"]["Enums"]["campus_id"] | null
           campus_verified: boolean
           created_at: string
           email: string
           id: string
+          is_public: boolean
+          last_login_at: string | null
+          show_campus: boolean
+          updated_at: string
+          username: string | null
         }
         Insert: {
+          account_status?: string
+          avatar_url?: string | null
+          bio?: string | null
           campus?: Database["public"]["Enums"]["campus_id"] | null
           campus_verified?: boolean
           created_at?: string
           email: string
           id: string
+          is_public?: boolean
+          last_login_at?: string | null
+          show_campus?: boolean
+          updated_at?: string
+          username?: string | null
         }
         Update: {
+          account_status?: string
+          avatar_url?: string | null
+          bio?: string | null
           campus?: Database["public"]["Enums"]["campus_id"] | null
           campus_verified?: boolean
           created_at?: string
           email?: string
           id?: string
+          is_public?: boolean
+          last_login_at?: string | null
+          show_campus?: boolean
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_sessions: {
+        Row: {
+          browser: string | null
+          device: string | null
+          ended_at: string | null
+          id: string
+          ip_address: string | null
+          last_seen_at: string
+          platform: string | null
+          session_fingerprint: string
+          started_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          browser?: string | null
+          device?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: string | null
+          last_seen_at?: string
+          platform?: string | null
+          session_fingerprint: string
+          started_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          browser?: string | null
+          device?: string | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: string | null
+          last_seen_at?: string
+          platform?: string | null
+          session_fingerprint?: string
+          started_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      verification_throttle: {
+        Row: {
+          created_at: string
+          email: string
+          failed_attempts: number
+          id: string
+          last_sent_at: string | null
+          locked_until: string | null
+          purpose: string
+          send_count: number
+          updated_at: string
+          window_started_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          failed_attempts?: number
+          id?: string
+          last_sent_at?: string | null
+          locked_until?: string | null
+          purpose: string
+          send_count?: number
+          updated_at?: string
+          window_started_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          failed_attempts?: number
+          id?: string
+          last_sent_at?: string | null
+          locked_until?: string | null
+          purpose?: string
+          send_count?: number
+          updated_at?: string
+          window_started_at?: string
         }
         Relationships: []
       }
@@ -101,9 +347,18 @@ export type Database = {
         Args: { _email: string }
         Returns: Database["public"]["Enums"]["campus_id"]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "student" | "admin"
       campus_id: "fsu" | "uf" | "famu"
+      request_status: "pending" | "under_review" | "approved" | "denied"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -231,7 +486,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["student", "admin"],
       campus_id: ["fsu", "uf", "famu"],
+      request_status: ["pending", "under_review", "approved", "denied"],
     },
   },
 } as const

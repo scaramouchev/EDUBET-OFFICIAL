@@ -16,6 +16,11 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as RankRouteImport } from './routes/rank'
+import { Route as RequestCollegeRouteImport } from './routes/request-college'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
+import { Route as AuthForgotRouteImport } from './routes/auth/forgot'
+import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +57,31 @@ const RankRoute = RankRouteImport.update({
   path: '/rank',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RequestCollegeRoute = RequestCollegeRouteImport.update({
+  id: '/request-college',
+  path: '/request-college',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthForgotRoute = AuthForgotRouteImport.update({
+  id: '/auth/forgot',
+  path: '/auth/forgot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthVerifyRoute = AuthVerifyRouteImport.update({
+  id: '/auth/verify',
+  path: '/auth/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +91,11 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
   '/rank': typeof RankRoute
+  '/request-college': typeof RequestCollegeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/auth/forgot': typeof AuthForgotRoute
+  '/auth/verify': typeof AuthVerifyRoute
+  '/auth/': typeof AuthIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +105,11 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
   '/rank': typeof RankRoute
+  '/request-college': typeof RequestCollegeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/auth/forgot': typeof AuthForgotRoute
+  '/auth/verify': typeof AuthVerifyRoute
+  '/auth': typeof AuthIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,13 +120,41 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/pulse': typeof PulseRoute
   '/rank': typeof RankRoute
+  '/request-college': typeof RequestCollegeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/auth/forgot': typeof AuthForgotRoute
+  '/auth/verify': typeof AuthVerifyRoute
+  '/auth/': typeof AuthIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
+    | '/'
+    | '/campus'
+    | '/create'
+    | '/home'
+    | '/profile'
+    | '/pulse'
+    | '/rank'
+    | '/request-college'
+    | '/reset-password'
+    | '/auth/forgot'
+    | '/auth/verify'
+    | '/auth/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/campus' | '/create' | '/home' | '/profile' | '/pulse' | '/rank'
+  to:
+    | '/'
+    | '/campus'
+    | '/create'
+    | '/home'
+    | '/profile'
+    | '/pulse'
+    | '/rank'
+    | '/request-college'
+    | '/reset-password'
+    | '/auth/forgot'
+    | '/auth/verify'
+    | '/auth'
   id:
     | '__root__'
     | '/'
@@ -96,6 +164,11 @@ export interface FileRouteTypes {
     | '/profile'
     | '/pulse'
     | '/rank'
+    | '/request-college'
+    | '/reset-password'
+    | '/auth/forgot'
+    | '/auth/verify'
+    | '/auth/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +179,11 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   PulseRoute: typeof PulseRoute
   RankRoute: typeof RankRoute
+  RequestCollegeRoute: typeof RequestCollegeRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  AuthForgotRoute: typeof AuthForgotRoute
+  AuthVerifyRoute: typeof AuthVerifyRoute
+  AuthIndexRoute: typeof AuthIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -159,6 +237,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RankRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/request-college': {
+      id: '/request-college'
+      path: '/request-college'
+      fullPath: '/request-college'
+      preLoaderRoute: typeof RequestCollegeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/forgot': {
+      id: '/auth/forgot'
+      path: '/auth/forgot'
+      fullPath: '/auth/forgot'
+      preLoaderRoute: typeof AuthForgotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/verify': {
+      id: '/auth/verify'
+      path: '/auth/verify'
+      fullPath: '/auth/verify'
+      preLoaderRoute: typeof AuthVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -170,6 +283,11 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   PulseRoute: PulseRoute,
   RankRoute: RankRoute,
+  RequestCollegeRoute: RequestCollegeRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  AuthForgotRoute: AuthForgotRoute,
+  AuthVerifyRoute: AuthVerifyRoute,
+  AuthIndexRoute: AuthIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

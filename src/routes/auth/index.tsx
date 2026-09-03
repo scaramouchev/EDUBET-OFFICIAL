@@ -69,6 +69,11 @@ function AuthPage() {
         toast.success(`Verification code sent to ${email}`);
         navigate({ to: "/auth/verify", search: { email } });
       } else {
+        const domain = email.split("@")[1]?.toLowerCase() ?? "";
+        if (!/(^|\.)edu$/.test(domain)) {
+          setError("Only official college (.edu) email addresses can sign in.");
+          return;
+        }
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
         if (signInError) {
           await reportFailure({ data: { email, message: signInError.message } }).catch(() => {});

@@ -103,7 +103,7 @@ export const updateMyProfile = createServerFn({ method: "POST" })
     isPublic: d.isPublic,
   }))
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    const patch: { updated_at: string; username?: string; bio?: string; show_campus?: boolean; is_public?: boolean } = { updated_at: new Date().toISOString() };
     if (data.username !== undefined) patch["username"] = data.username;
     if (data.bio !== undefined) patch["bio"] = data.bio;
     if (data.showCampus !== undefined) patch["show_campus"] = data.showCampus;

@@ -66,7 +66,7 @@ const MAX_SENDS_PER_WINDOW = 5;
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCK_MS = 15 * 60_000;
 
-type Purpose = "signup" | "recovery";
+type Purpose = "signup" | "recovery" | "login";
 
 async function getRow(email: string, purpose: Purpose) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

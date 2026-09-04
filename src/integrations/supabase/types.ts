@@ -92,6 +92,117 @@ export type Database = {
         }
         Relationships: []
       }
+      campus_events: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"]
+          category: string
+          created_at: string
+          description: string | null
+          ends_at: string | null
+          external_id: string | null
+          id: string
+          is_active: boolean
+          location: string | null
+          source: Database["public"]["Enums"]["event_source"]
+          starts_at: string
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          campus: Database["public"]["Enums"]["campus_id"]
+          category?: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          external_id?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          source?: Database["public"]["Enums"]["event_source"]
+          starts_at: string
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"]
+          category?: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          external_id?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          source?: Database["public"]["Enums"]["event_source"]
+          starts_at?: string
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
+      coin_balances: {
+        Row: {
+          balance: number
+          lifetime_staked: number
+          lifetime_won: number
+          sweepstakes_entries: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          lifetime_staked?: number
+          lifetime_won?: number
+          sweepstakes_entries?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          lifetime_staked?: number
+          lifetime_won?: number
+          sweepstakes_entries?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      coin_ledger: {
+        Row: {
+          balance_after: number
+          created_at: string
+          delta: number
+          entries_delta: number
+          id: string
+          reason: string
+          reference: string | null
+          user_id: string
+        }
+        Insert: {
+          balance_after: number
+          created_at?: string
+          delta: number
+          entries_delta?: number
+          id?: string
+          reason: string
+          reference?: string | null
+          user_id: string
+        }
+        Update: {
+          balance_after?: number
+          created_at?: string
+          delta?: number
+          entries_delta?: number
+          id?: string
+          reason?: string
+          reference?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       college_requests: {
         Row: {
           college_name: string
@@ -146,15 +257,122 @@ export type Database = {
         }
         Relationships: []
       }
+      event_feeds: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"]
+          created_at: string
+          id: string
+          is_active: boolean
+          last_result: string | null
+          last_synced_at: string | null
+          name: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          campus: Database["public"]["Enums"]["campus_id"]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_result?: string | null
+          last_synced_at?: string | null
+          name: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_result?: string | null
+          last_synced_at?: string | null
+          name?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      markets: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"] | null
+          category: string
+          closes_at: string
+          created_at: string
+          created_by: string | null
+          detail: string | null
+          event_id: string | null
+          id: string
+          no_odds: number
+          outcome: string | null
+          question: string
+          resolution_note: string | null
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["market_status"]
+          sweepstakes_entries_reward: number
+          updated_at: string
+          yes_odds: number
+        }
+        Insert: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          category?: string
+          closes_at: string
+          created_at?: string
+          created_by?: string | null
+          detail?: string | null
+          event_id?: string | null
+          id?: string
+          no_odds?: number
+          outcome?: string | null
+          question: string
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["market_status"]
+          sweepstakes_entries_reward?: number
+          updated_at?: string
+          yes_odds?: number
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          category?: string
+          closes_at?: string
+          created_at?: string
+          created_by?: string | null
+          detail?: string | null
+          event_id?: string | null
+          id?: string
+          no_odds?: number
+          outcome?: string | null
+          question?: string
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["market_status"]
+          sweepstakes_entries_reward?: number
+          updated_at?: string
+          yes_odds?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "markets_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "campus_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       predictions: {
         Row: {
           amount: number
           campus: Database["public"]["Enums"]["campus_id"] | null
+          entries_awarded: number
           id: string
           locked_at: string
           market_id: string
           market_question: string
+          odds: number
           outcome: string | null
+          payout: number
           reference_id: string
           resolved_at: string | null
           side: string
@@ -163,11 +381,14 @@ export type Database = {
         Insert: {
           amount: number
           campus?: Database["public"]["Enums"]["campus_id"] | null
+          entries_awarded?: number
           id?: string
           locked_at?: string
           market_id: string
           market_question: string
+          odds?: number
           outcome?: string | null
+          payout?: number
           reference_id?: string
           resolved_at?: string | null
           side: string
@@ -176,11 +397,14 @@ export type Database = {
         Update: {
           amount?: number
           campus?: Database["public"]["Enums"]["campus_id"] | null
+          entries_awarded?: number
           id?: string
           locked_at?: string
           market_id?: string
           market_question?: string
+          odds?: number
           outcome?: string | null
+          payout?: number
           reference_id?: string
           resolved_at?: string | null
           side?: string
@@ -235,6 +459,83 @@ export type Database = {
           username?: string | null
         }
         Relationships: []
+      }
+      sweepstakes: {
+        Row: {
+          campus: Database["public"]["Enums"]["campus_id"] | null
+          created_at: string
+          description: string | null
+          drawn_at: string | null
+          draws_at: string
+          entry_cost: number
+          id: string
+          prize: string
+          status: Database["public"]["Enums"]["sweepstakes_status"]
+          title: string
+          updated_at: string
+          winner_user_id: string | null
+        }
+        Insert: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          created_at?: string
+          description?: string | null
+          drawn_at?: string | null
+          draws_at: string
+          entry_cost?: number
+          id?: string
+          prize: string
+          status?: Database["public"]["Enums"]["sweepstakes_status"]
+          title: string
+          updated_at?: string
+          winner_user_id?: string | null
+        }
+        Update: {
+          campus?: Database["public"]["Enums"]["campus_id"] | null
+          created_at?: string
+          description?: string | null
+          drawn_at?: string | null
+          draws_at?: string
+          entry_cost?: number
+          id?: string
+          prize?: string
+          status?: Database["public"]["Enums"]["sweepstakes_status"]
+          title?: string
+          updated_at?: string
+          winner_user_id?: string | null
+        }
+        Relationships: []
+      }
+      sweepstakes_entries: {
+        Row: {
+          created_at: string
+          entries: number
+          id: string
+          sweepstakes_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entries?: number
+          id?: string
+          sweepstakes_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entries?: number
+          id?: string
+          sweepstakes_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sweepstakes_entries_sweepstakes_id_fkey"
+            columns: ["sweepstakes_id"]
+            isOneToOne: false
+            referencedRelation: "sweepstakes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -347,6 +648,12 @@ export type Database = {
         Args: { _email: string }
         Returns: Database["public"]["Enums"]["campus_id"]
       }
+      draw_sweepstakes: { Args: { _sweepstakes_id: string }; Returns: string }
+      ensure_balance: { Args: { _user: string }; Returns: undefined }
+      enter_sweepstakes: {
+        Args: { _entries?: number; _sweepstakes_id: string }
+        Returns: number
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -354,11 +661,22 @@ export type Database = {
         }
         Returns: boolean
       }
+      resolve_market: {
+        Args: { _market_id: string; _note?: string; _outcome: string }
+        Returns: {
+          paid: number
+          settled: number
+          winners: number
+        }[]
+      }
     }
     Enums: {
       app_role: "student" | "admin"
       campus_id: "fsu" | "uf" | "famu"
+      event_source: "seed" | "admin" | "feed"
+      market_status: "draft" | "open" | "closed" | "resolved" | "void"
       request_status: "pending" | "under_review" | "approved" | "denied"
+      sweepstakes_status: "upcoming" | "open" | "drawing" | "closed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -488,7 +806,10 @@ export const Constants = {
     Enums: {
       app_role: ["student", "admin"],
       campus_id: ["fsu", "uf", "famu"],
+      event_source: ["seed", "admin", "feed"],
+      market_status: ["draft", "open", "closed", "resolved", "void"],
       request_status: ["pending", "under_review", "approved", "denied"],
+      sweepstakes_status: ["upcoming", "open", "drawing", "closed"],
     },
   },
 } as const

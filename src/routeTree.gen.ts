@@ -18,6 +18,7 @@ import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as RequestCollegeRouteImport } from './routes/request-college'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SweepstakesRouteImport } from './routes/sweepstakes'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AuthForgotRouteImport } from './routes/auth/forgot'
 import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
@@ -67,6 +68,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SweepstakesRoute = SweepstakesRouteImport.update({
+  id: '/sweepstakes',
+  path: '/sweepstakes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/rank': typeof RankRoute
   '/request-college': typeof RequestCollegeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sweepstakes': typeof SweepstakesRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/auth/': typeof AuthIndexRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/rank': typeof RankRoute
   '/request-college': typeof RequestCollegeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sweepstakes': typeof SweepstakesRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/auth': typeof AuthIndexRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/rank': typeof RankRoute
   '/request-college': typeof RequestCollegeRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sweepstakes': typeof SweepstakesRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/auth/': typeof AuthIndexRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/rank'
     | '/request-college'
     | '/reset-password'
+    | '/sweepstakes'
     | '/auth/forgot'
     | '/auth/verify'
     | '/auth/'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/rank'
     | '/request-college'
     | '/reset-password'
+    | '/sweepstakes'
     | '/auth/forgot'
     | '/auth/verify'
     | '/auth'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/rank'
     | '/request-college'
     | '/reset-password'
+    | '/sweepstakes'
     | '/auth/forgot'
     | '/auth/verify'
     | '/auth/'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   RankRoute: typeof RankRoute
   RequestCollegeRoute: typeof RequestCollegeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SweepstakesRoute: typeof SweepstakesRoute
   AuthForgotRoute: typeof AuthForgotRoute
   AuthVerifyRoute: typeof AuthVerifyRoute
   AuthIndexRoute: typeof AuthIndexRoute
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sweepstakes': {
+      id: '/sweepstakes'
+      path: '/sweepstakes'
+      fullPath: '/sweepstakes'
+      preLoaderRoute: typeof SweepstakesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/': {
       id: '/auth/'
       path: '/auth'
@@ -285,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   RankRoute: RankRoute,
   RequestCollegeRoute: RequestCollegeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SweepstakesRoute: SweepstakesRoute,
   AuthForgotRoute: AuthForgotRoute,
   AuthVerifyRoute: AuthVerifyRoute,
   AuthIndexRoute: AuthIndexRoute,

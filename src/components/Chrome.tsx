@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Command, Home, Plus, Trophy, User, Zap, ChevronDown } from "lucide-react";
+import { Bell, Gift, Home, Trophy, User, Zap, ChevronDown } from "lucide-react";
+import { BalancePill } from "@/components/Wallet";
 import { CAMPUSES, type CampusId } from "@/lib/campus";
 
 export function TopBar({ campus }: { campus: CampusId }) {
@@ -16,9 +17,7 @@ export function TopBar({ campus }: { campus: CampusId }) {
           <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
         </Link>
         <div className="flex items-center gap-4 text-muted-foreground">
-          <span className="label flex items-center gap-1 rounded-md border border-hairline px-2 py-1">
-            <Command className="h-3 w-3" /> K
-          </span>
+          <BalancePill />
           <Bell className="h-4 w-4" />
           <User className="h-4 w-4" />
         </div>
@@ -30,7 +29,7 @@ export function TopBar({ campus }: { campus: CampusId }) {
 const NAV = [
   { to: "/home", label: "Home", icon: Home },
   { to: "/pulse", label: "Pulse", icon: Zap },
-  { to: "/create", label: "+", icon: Plus },
+  { to: "/sweepstakes", label: "Prizes", icon: Gift },
   { to: "/rank", label: "Rank", icon: Trophy },
   { to: "/profile", label: "Profile", icon: User },
 ] as const;

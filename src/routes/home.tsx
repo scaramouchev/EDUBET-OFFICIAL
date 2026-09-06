@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { BottomNav, CampusToast, TopBar } from "@/components/Chrome";
 import { MarketCard } from "@/components/MarketCard";
-import { CAMPUSES, MARKETS, getStoredCampus, type CampusId } from "@/lib/campus";
+import { WalletPanel, useWallet } from "@/components/Wallet";
+import { CAMPUSES, getStoredCampus, type CampusId } from "@/lib/campus";
+import { listMarkets, type MarketRow } from "@/lib/markets.functions";
 
 export const Route = createFileRoute("/home")({
   head: () => ({
@@ -11,13 +15,15 @@ export const Route = createFileRoute("/home")({
       {
         name: "description",
         content:
-          "Live campus activity, trending prediction markets, and what students are voting on today.",
+          "Live campus activity, trending prediction markets with real odds, and what students are voting on today.",
       },
       { property: "og:title", content: "Your campus right now — EduBet" },
       {
         property: "og:description",
         content: "Live campus activity and trending prediction markets.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: HomeFeed,
@@ -50,6 +56,12 @@ function HomeFeed() {
   }, []);
 
   const c = CAMPUSES.find((x) => x.id === campus)!;
+  const marketsFn = useServerFn(listMarkets);
+  const { data: markets, isLoading } = useQuery({
+    queryKey: ["markets", campus],
+    queryFn: () => marketsFn({ data: { campus } }) as Promise<MarketRow[]>,
+  });
+  const { data: wallet } = useWallet();
 
   return (
     <div data-campus={campus} className="void-field min-h-screen">
@@ -59,6 +71,8 @@ function HomeFeed() {
       <main className="mx-auto max-w-3xl px-5 pb-32 pt-10">
         <p className="label">Good morning</p>
         <h1 className="mt-2 text-2xl font-medium tracking-tight">Here's your campus.</h1>
+
+        <WalletPanel />
 
         <section className="panel mt-6 p-5 sm:p-6">
           <div className="flex items-center justify-between">
@@ -102,12 +116,22 @@ function HomeFeed() {
 
         <div className="mt-10 flex items-center justify-between">
           <span className="label">Trending · {c.short}</span>
-          <span className="label">{MARKETS.length} Markets</span>
+          <span className="label">{markets?.length ?? 0} Markets</span>
         </div>
 
         <div className="mt-4 space-y-5">
-          {MARKETS.map((m) => (
-            <MarketCard key={m.id} market={m} />
+          {isLoading && <div className="panel h-56 animate-pulse" />}
+          {!isLoading && (markets?.length ?? 0) === 0 && (
+            <p className="panel p-6 text-sm text-muted-foreground">
+              No open markets for {c.short} yet.
+            </p>
+          )}
+          {(markets ?? []).map((m) => (
+            <MarketCard
+              key={m.id}
+              market={m}
+              {...(wallet ? { balance: wallet.balance } : {})}
+            />
           ))}
         </div>
       </main>

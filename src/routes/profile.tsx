@@ -1,7 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { BottomNav, TopBar } from "@/components/Chrome";
+import { WalletPanel } from "@/components/Wallet";
 import { CAMPUSES, getStoredCampus, type CampusId } from "@/lib/campus";
+import { useSession } from "@/lib/session";
+import { listMyPredictions } from "@/lib/predictions.functions";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({

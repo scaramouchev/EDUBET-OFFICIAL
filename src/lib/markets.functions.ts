@@ -268,7 +268,7 @@ export const resolveMarket = createServerFn({ method: "POST" })
     const { data: res, error } = await context.supabase.rpc("resolve_market", {
       _market_id: data.marketId,
       _outcome: data.outcome,
-      _note: data.note,
+      ...(data.note ? { _note: data.note } : {}),
     });
     if (error) throw new Error(error.message);
     const row = Array.isArray(res) ? res[0] : res;

@@ -167,14 +167,35 @@ export const getAdminOverview = createServerFn({ method: "GET" })
         .order("draws_at", { ascending: true }),
     ]);
 
+    const sweepRows = sweeps.data ?? [];
+    const winnerIds = sweepRows.map((s) => s.winner_user_id).filter((v): v is string => !!v);
+    const [{ data: winnerProfiles }, { data: entryRows }] = await Promise.all([
+      winnerIds.length
+        ? context.supabase.from("profiles").select("id, email, username").in("id", winnerIds)
+        : Promise.resolve({ data: [] as { id: string; email: string; username: string | null }[] }),
+      context.supabase.from("sweepstakes_entries").select("sweepstakes_id, entries"),
+    ]);
+    const nameById = new Map(
+      (winnerProfiles ?? []).map((p) => [p.id, p.username || p.email]),
+    );
+    const entriesById = new Map<string, number>();
+    for (const r of entryRows ?? []) {
+      entriesById.set(r.sweepstakes_id, (entriesById.get(r.sweepstakes_id) ?? 0) + r.entries);
+    }
+
     return {
       isAdmin: true as const,
       markets: markets.data ?? [],
       events: events.data ?? [],
       feeds: feeds.data ?? [],
-      sweepstakes: sweeps.data ?? [],
+      sweepstakes: sweepRows.map((s) => ({
+        ...s,
+        winner_label: s.winner_user_id ? (nameById.get(s.winner_user_id) ?? "Winner drawn") : null,
+        total_entries: entriesById.get(s.id) ?? 0,
+      })),
     };
   });
+
 
 export const createMarket = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Gift, Home, Trophy, User, Zap, ChevronDown } from "lucide-react";
+import { Bell, CalendarDays, Gift, Home, Trophy, User, Zap, ChevronDown } from "lucide-react";
 import { BalancePill } from "@/components/Wallet";
 import { CAMPUSES, type CampusId } from "@/lib/campus";
 
@@ -28,6 +28,7 @@ export function TopBar({ campus }: { campus: CampusId }) {
 
 const NAV = [
   { to: "/home", label: "Home", icon: Home },
+  { to: "/calendar", label: "Slate", icon: CalendarDays },
   { to: "/pulse", label: "Pulse", icon: Zap },
   { to: "/sweepstakes", label: "Prizes", icon: Gift },
   { to: "/rank", label: "Rank", icon: Trophy },
@@ -45,7 +46,7 @@ export function BottomNav() {
             <Link
               key={to}
               to={to}
-              className={`flex w-16 flex-col items-center gap-1 rounded-full px-2 py-1.5 transition-colors ${
+              className={`flex w-[3.25rem] flex-col items-center gap-1 rounded-full px-1.5 py-1.5 transition-colors ${
                 active ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >

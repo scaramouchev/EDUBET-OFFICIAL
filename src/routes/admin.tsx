@@ -82,7 +82,7 @@ function AdminPage() {
 
   const makeMarkets = useMutation({
     mutationFn: useServerFn(createMarketsFromEvents),
-    onSuccess: (r) => {
+    onSuccess: (r: { created: number }) => {
       toast.success(`${r.created} market${r.created === 1 ? "" : "s"} opened`);
       setPicked([]);
       refresh();
@@ -91,7 +91,7 @@ function AdminPage() {
   });
   const settle = useMutation({
     mutationFn: useServerFn(resolveMarket),
-    onSuccess: (r) => {
+    onSuccess: (r: { settled: number; winners: number; paid: number }) => {
       toast.success(`Settled ${r.settled} predictions · ${r.winners} winners paid ${r.paid} coins`);
       refresh();
     },
@@ -335,11 +335,12 @@ function AdminPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const f = new FormData(e.currentTarget);
+              const campusVal = String(f.get("campus") ?? "");
               newSweep.mutate({
                 data: {
                   title: String(f.get("title") ?? ""),
                   prize: String(f.get("prize") ?? ""),
-                  campus: String(f.get("campus") ?? "") || undefined,
+                  ...(campusVal ? { campus: campusVal } : {}),
                   entryCost: Number(f.get("entryCost") ?? 1),
                   drawsAt: String(f.get("drawsAt") ?? ""),
                 },

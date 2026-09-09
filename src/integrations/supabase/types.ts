@@ -293,6 +293,53 @@ export type Database = {
         }
         Relationships: []
       }
+      market_disputes: {
+        Row: {
+          admin_note: string | null
+          created_at: string
+          id: string
+          market_id: string
+          prediction_reference: string | null
+          reason: string
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["dispute_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          created_at?: string
+          id?: string
+          market_id: string
+          prediction_reference?: string | null
+          reason: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["dispute_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          created_at?: string
+          id?: string
+          market_id?: string
+          prediction_reference?: string | null
+          reason?: string
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["dispute_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "market_disputes_market_id_fkey"
+            columns: ["market_id"]
+            isOneToOne: false
+            referencedRelation: "markets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       markets: {
         Row: {
           campus: Database["public"]["Enums"]["campus_id"] | null
@@ -661,6 +708,48 @@ export type Database = {
         }
         Returns: boolean
       }
+      leaderboard: {
+        Args: {
+          _campus?: Database["public"]["Enums"]["campus_id"]
+          _limit?: number
+        }
+        Returns: {
+          accuracy: number
+          balance: number
+          campus: Database["public"]["Enums"]["campus_id"]
+          coins_won: number
+          entries: number
+          label: string
+          open_positions: number
+          settled: number
+          user_id: string
+          wins: number
+        }[]
+      }
+      market_results: {
+        Args: {
+          _campus?: Database["public"]["Enums"]["campus_id"]
+          _limit?: number
+        }
+        Returns: {
+          campus: Database["public"]["Enums"]["campus_id"]
+          category: string
+          detail: string
+          entries_awarded: number
+          market_id: string
+          no_odds: number
+          outcome: string
+          question: string
+          resolution_note: string
+          resolved_at: string
+          top_payout: number
+          top_winner: string
+          total_paid: number
+          total_predictions: number
+          winners: number
+          yes_odds: number
+        }[]
+      }
       resolve_market: {
         Args: { _market_id: string; _note?: string; _outcome: string }
         Returns: {
@@ -673,6 +762,7 @@ export type Database = {
     Enums: {
       app_role: "student" | "admin"
       campus_id: "fsu" | "uf" | "famu"
+      dispute_status: "open" | "under_review" | "upheld" | "rejected"
       event_source: "seed" | "admin" | "feed"
       market_status: "draft" | "open" | "closed" | "resolved" | "void"
       request_status: "pending" | "under_review" | "approved" | "denied"
@@ -806,6 +896,7 @@ export const Constants = {
     Enums: {
       app_role: ["student", "admin"],
       campus_id: ["fsu", "uf", "famu"],
+      dispute_status: ["open", "under_review", "upheld", "rejected"],
       event_source: ["seed", "admin", "feed"],
       market_status: ["draft", "open", "closed", "resolved", "void"],
       request_status: ["pending", "under_review", "approved", "denied"],
